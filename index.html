@@ -352,27 +352,35 @@
 
 
   
-    <article id="post-num-one" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-js数据类型判断和数组判断" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/05/num-one/">num-one</a>
+      <a class="article-title" href="/2015/08/01/js数据类型判断和数组判断/">JS 的数据类型有哪些？</a>
     </h1>
   
 
         
-        <a href="/2015/07/05/num-one/" class="archive-article-date">
-  	<time datetime="2015-07-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-07-05</time>
+        <a href="/2015/08/01/js数据类型判断和数组判断/" class="archive-article-date">
+  	<time datetime="2015-07-31T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-08-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Quick-Start-Yuxiaoyu"><a href="#Quick-Start-Yuxiaoyu" class="headerlink" title="Quick Start Yuxiaoyu"></a>Quick Start Yuxiaoyu</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><p>``` bash<br>$ hexo new “My New Post”</p>
+        <h1 id="js数据类型判断和数组判断"><a href="#js数据类型判断和数组判断" class="headerlink" title="js数据类型判断和数组判断"></a>js数据类型判断和数组判断</h1><p>js六大数据类型：number、string、object、Boolean、null、undefined</p>
+<h2 id="使用typeof检测数据类型"><a href="#使用typeof检测数据类型" class="headerlink" title="使用typeof检测数据类型"></a>使用typeof检测数据类型</h2><p>typeof放在一个运算值之前，其返回值为一个字符串，该字符串说明运算数的类型，判断某个是否为String类型，可以直接 if(typeof(你的值) == “string”){}</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var a=<span class="string">"123"</span>; typeof(a); //<span class="string">"string"</span>;</div><div class="line">var a=123; typeof(a); //<span class="string">"number"</span>;</div><div class="line">var a=<span class="literal">false</span>; typeof(a); //<span class="string">"boolean"</span>;</div><div class="line">var a; typeof(a);//<span class="string">"undfined"</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var a = null; typeof(a);//<span class="string">"object"</span>;</div><div class="line">var a = document; typeof(a); //<span class="string">"object"</span>;</div><div class="line">var a = []; typeof(a); //<span class="string">"object"</span>;</div><div class="line">var a = <span class="function"><span class="title">function</span></span>()&#123;&#125;; typeof(a) //<span class="string">"function"</span> 除了可以判断数据类型还可以判断<span class="keyword">function</span></div></pre></td></tr></table></figure>
+<p>显然除了前四个，null、对象、数组返回的都是object类型；函数类型返回的则是function，然而如何判断数据是个数组类型？</p>
+<h2 id="检测数组的三种方式："><a href="#检测数组的三种方式：" class="headerlink" title="检测数组的三种方式："></a>检测数组的三种方式：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//方式1：Array.isArray(数据)  返回bool值</div><div class="line">//ie9以下不支持，不使用</div><div class="line">//console.log(Array.isArray(arr));</div><div class="line">//console.log(Array.isArray(<span class="string">"abc"</span>));</div><div class="line"></div><div class="line">//方式2(推荐使用，简单好记)： 数据 instanceof Array   返回bool值</div><div class="line">//instance 实例 - 实际的例子</div><div class="line">// console.log(arr instanceof Array);</div><div class="line">// console.log(<span class="string">"abc"</span> instanceof Array);</div><div class="line"></div><div class="line">//方式3：Object.prototype.toString.call(数据);   返回值为数据类型，字符串形式 <span class="string">"[object xxxx]"</span></div><div class="line">// console.log(Object.prototype.toString.call(arr)); //<span class="string">"[object Array]"</span></div><div class="line">// console.log(Object.prototype.toString.call(null)); //<span class="string">"[object Null]"</span></div></pre></td></tr></table></figure>
+<h3 id="封装两个较为严谨的判断数组的方法"><a href="#封装两个较为严谨的判断数组的方法" class="headerlink" title="封装两个较为严谨的判断数组的方法"></a>封装两个较为严谨的判断数组的方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> isArray(object)&#123;</div><div class="line">    <span class="built_in">return</span> object &amp;&amp; typeof object===<span class="string">'object'</span> &amp;&amp;    Array == object.constructor;</div><div class="line">     &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> isArray(o) &#123;</div><div class="line">    <span class="built_in">return</span> Object.prototype.toString.call(o) === <span class="string">'[object Array]'</span>;</div><div class="line">     &#125;</div><div class="line">//这个函数比较简单</div></pre></td></tr></table></figure>
+<p>以上两个函数洞可以判断是不是数组，返回true或是false。。</p>
 
       
 
@@ -385,7 +393,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2015/07/05/num-one/">展开全文 >></a>
+          <a class="article-more-a" href="/2015/08/01/js数据类型判断和数组判断/">展开全文 >></a>
         </p>
       
 
